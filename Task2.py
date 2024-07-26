@@ -1,3 +1,4 @@
+
 #PASSWORD GENERATOR
 
 import tkinter as tk
@@ -19,3 +20,40 @@ class PasswordGenerator:
         self.number_digits_label.pack()
         self.number_digits_entry = tk.Entry(self.window, width=20, font=("Helvetica", 12), fg="#333", bg="#fff")  # white background with dark gray font
         self.number_digits_entry.pack()
+        self.number_special_characters_label = tk.Label(self.window, text="Enter the length of symbols:", font=("Helvetica", 12), fg="#333", bg="#f0f0f0")  # dark gray font on light gray background
+        self.number_special_characters_label.pack()
+        self.number_special_characters_entry = tk.Entry(self.window, width=20, font=("Helvetica", 12), fg="#333", bg="#fff")  # white background with dark gray font
+        self.number_special_characters_entry.pack()
+        self.generate_button = tk.Button(self.window, text="Generate Password", command=self.generate_password, font=("Helvetica", 12, "bold"), fg="#fff", bg="blue")  # green button with white font
+        self.generate_button.pack(pady=10)
+        self.password_label = tk.Label(self.window, text="", font=("Helvetica", 16), fg="#333", bg="#f0f0f0")  # dark gray font on light gray background
+        self.password_label.pack()
+    def generate_password(self):
+        uppercase_letters = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
+        lowercase_letters = [chr(i) for i in range(ord('a'), ord('z') + 1)]
+        digits = [str(i) for i in range(10)]
+        special_characters = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+', '_']
+        letter = uppercase_letters + lowercase_letters
+        number_letter = int(self.number_letter_entry.get())
+        number_digits = int(self.number_digits_entry.get())
+        number_special_characters = int(self.number_special_characters_entry.get())
+        password_list = []
+        password = ""
+        for i in range(0, number_letter):
+            char = random.choice(letter)
+            password_list += char
+        for i in range(0, number_digits):
+            char = random.choice(digits)
+            password_list += char
+        for i in range(0, number_special_characters):
+            char = random.choice(special_characters)
+            password_list += char
+        random.shuffle(password_list)
+        for i in password_list:
+            password += i
+        self.password_label.config(text="Your password is: " + password)
+    def run(self):
+        self.window.mainloop()
+generator = PasswordGenerator()
+generator.run()
+        
